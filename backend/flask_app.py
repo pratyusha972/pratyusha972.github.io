@@ -20,7 +20,7 @@ def release_created():
     return jsonify({"message": "Release received", "release": release_name, "repository": repository}), 200
 
 @app.route("/live_demo")
-def home():
+def live_demo():
     return render_template("index.html")
 
 @app.route("/")
@@ -28,5 +28,5 @@ def home():
     return render_template("index.html")
 
 
-if __name__ == '__main__':
-    app.run()
+# if __name__ == '__main__':
+#     app.run()
