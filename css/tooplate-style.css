@@ -28,10 +28,15 @@ body {
 
 ul {
   margin: 0;
-  padding: 0;
+  /*padding: 0;*/
+  list-style-type: disc; /* Standard bullet points */
+  padding-left: 20px; /* Indentation for bullets */
+  font-size: 16px; /* Readable text */
+  line-height: 1.5; /* Space between lines */
 }
 ul li {
-  list-style: none;
+  /*list-style: none;*/
+  margin-bottom: 5px; /* Add space between bullet points */
 }
 
 a {
@@ -120,7 +125,7 @@ b, strong {
 }
 
 .animated-item {
-  font-size: 50px;
+  font-size: 30px;
   line-height: inherit;
   display: block;
   opacity: 0;
