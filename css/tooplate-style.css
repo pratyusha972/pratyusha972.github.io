@@ -110,7 +110,7 @@ b, strong {
 .animated-info {
   display: inline-block;
   vertical-align: top;
-  margin-top: 5px;
+  margin-top: -5px;
   min-width: 260px;
   position: relative;
 }
@@ -120,7 +120,7 @@ b, strong {
 }
 
 .animated-item {
-  font-size: 38px;
+  font-size: 50px;
   line-height: inherit;
   display: block;
   opacity: 0;
@@ -129,6 +129,7 @@ b, strong {
   top: 0;
   right: 0;
   left: 0;
+  /*bottom: 3px;*/
   animation: BottomTotop 6s linear infinite 0s;
 }
 .animated-item:nth-child(2n+2) {
@@ -354,8 +355,8 @@ b, strong {
 .timeline-info {
   display: inline-block;
   vertical-align: top;
-  max-width: 432px;
-  margin-left: 6em;
+  max-width: 100%;
+  /*margin-left: 6em;*/
 }
 .timeline-info small {
   color: #474559;
@@ -363,7 +364,7 @@ b, strong {
   font-weight: bold;
   display: inline-block;
   vertical-align: middle;
-  margin-left: 15px;
+  margin-left: 1px;
 }
 
 .owl-carousel .owl-nav span {
