@@ -1,6 +1,6 @@
 import hashlib
 import hmac
-from http.client import HTTPException
+import os
 
 import git
 from flask import Flask, request, jsonify, render_template
@@ -19,11 +19,11 @@ def verify_signature(payload_body, secret_token, signature_header):
         signature_header: header received from GitHub (x-hub-signature-256)
     """
     if not signature_header:
-        raise HTTPException()
+        return False
     hash_object = hmac.new(secret_token.encode('utf-8'), msg=payload_body, digestmod=hashlib.sha256)
     expected_signature = "sha256=" + hash_object.hexdigest()
     if not hmac.compare_digest(expected_signature, signature_header):
-        raise HTTPException()
+        return False
 
 
 # GitHub Webhook Route
@@ -35,7 +35,8 @@ def release_created():
     """
     data = request.json  # Get JSON payload from GitHub webhook
     headers = request.headers
-    verify_signature(data, WEBHOOK_SECRET, headers.get("x-hub-signature-256"))
+    if not verify_signature(data, os.getenv("WEBHOOK_SECRET"), headers.get("x-hub-signature-256")):
+        return jsonify({"error": "Invalid payload"}), 400
     if not data:
         return jsonify({"error": "Invalid payload"}), 400
 
