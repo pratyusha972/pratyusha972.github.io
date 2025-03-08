@@ -9,23 +9,11 @@ app = Flask(__name__)
 
 
 def verify_signature(payload_body, secret_token, signature_header):
-    """Verify that the payload was sent from GitHub by validating SHA256.
-
-    Raise and return 403 if not authorized.
-
-    Args:
-        payload_body: original request body to verify (request.body())
-        secret_token: GitHub app webhook token (WEBHOOK_SECRET)
-        signature_header: header received from GitHub (x-hub-signature-256)
-    """
-    print("Verifying signature...", payload_body, secret_token, signature_header)
-    if not signature_header:
-        return False
-    hash_object = hmac.new(secret_token.encode('utf-8'), msg=payload_body, digestmod=hashlib.sha256)
-    expected_signature = "sha256=" + hash_object.hexdigest()
-    if not hmac.compare_digest(expected_signature, signature_header):
-        return False
-    return True
+    hash_algorithm, github_signature = signature_header.split('=', 1)
+    algorithm = hashlib.__dict__.get(hash_algorithm)
+    encoded_key = bytes(secret_token, 'latin-1')
+    mac = hmac.new(encoded_key, msg=payload_body, digestmod=algorithm)
+    return hmac.compare_digest(mac.hexdigest(), github_signature)
 
 
 # GitHub Webhook Route
@@ -37,7 +25,7 @@ def release_created():
     """
     data = request.json  # Get JSON payload from GitHub webhook
     headers = request.headers
-    if not verify_signature(data, os.getenv("WEBHOOK_SECRET"), headers.get("X-Hub-Signature-256")):
+    if not verify_signature(data, os.getenv("WEBHOOK_SECRET"), headers.get("X-Hub-Signature")):
         return jsonify({"error": "Invalid payload"}), 400
     if not data:
         return jsonify({"error": "Invalid payload"}), 400
