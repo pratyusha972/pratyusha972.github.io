@@ -47,7 +47,7 @@ def release_created():
 
     print(f"New release created: {release_name} in {repository}")
 
-    repo = git.Repo('/home/pratyusha792/972.github.io')
+    repo = git.Repo('/home/pratyusha792/pratyusha972.github.io')
     origin = repo.remotes.origin
     origin.pull()
 
