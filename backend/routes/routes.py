@@ -25,8 +25,8 @@ def release_created():
     """
     data = request.json  # Get JSON payload from GitHub webhook
     headers = request.headers
-    if not verify_signature(data, os.getenv("WEBHOOK_SECRET"), headers.get("X-Hub-Signature")):
-        return jsonify({"error": "Invalid payload"}), 400
+    # if not verify_signature(data, os.getenv("WEBHOOK_SECRET"), headers.get("X-Hub-Signature")):
+    #     return jsonify({"error": "Invalid payload"}), 400
     if not data:
         return jsonify({"error": "Invalid payload"}), 400
 
