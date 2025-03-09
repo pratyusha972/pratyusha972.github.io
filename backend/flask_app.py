@@ -1,5 +1,5 @@
 from flask import Flask
-from .config import Config
+from config import Config
 from flask_cors import CORS  # Optional: Enable CORS if needed
 
 def create_app():
@@ -14,7 +14,7 @@ def create_app():
     # db.init_app(app)
 
     # Import and register Blueprints
-    from .routes.routes import backend
+    from routes.routes import backend
     app.register_blueprint(backend, url_prefix="/")
 
     return app
