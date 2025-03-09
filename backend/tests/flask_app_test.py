@@ -3,7 +3,7 @@ import os
 
 import pytest
 
-from backend import create_app
+from backend.flask_app import create_app
 from backend.routes import routes
 
 
