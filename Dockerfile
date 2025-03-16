@@ -3,7 +3,10 @@ FROM python:3.9-slim
 
 # Set working directory in the container
 WORKDIR /app
-#ENV PYTHONPATH=/app
+ENV PYTHONPATH=/app
+RUN apt-get update && apt-get install -y git
+
+ENV GIT_PYTHON_GIT_EXECUTABLE=/usr/bin/git
 
 # Copy requirements file
 COPY requirements.txt .
